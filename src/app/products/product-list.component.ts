@@ -13,6 +13,8 @@ export class ProductListComponent implements OnInit {
     errorMessage: string;
     clicked: boolean = false;
 
+
+
     products: IProduct[];
 
     constructor(private _productService: ProductService) {

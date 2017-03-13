@@ -3,7 +3,7 @@
     {{pageTitle}}
   </div>
 
-  <!-- Filter the Products   -->
+  <!-- Filter the Products -->
   <div class='panel-body'>
     <div class='row'>
       <div class='col-md-2'>Filter by:</div>
@@ -37,9 +37,9 @@
         <tbody>
           <tr *ngFor='let product of products | productFilter:listFilter'>
             <td>
-              <span [style.backgroundcolor]='lightblue' *ngif="clicked">clicked</span>
+              <span [style.backgroundcolor]='lightblue' *ngIf="clicked">clicked</span>
             </td>
-            <td><a [routerLink]="['/product', product.productId]">
+            <td><a [routerLink]="['/product', product.id]">
                             {{product.productName}}
                             </a>
             </td>
