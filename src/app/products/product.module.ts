@@ -6,8 +6,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ProductListComponent } from './product-list.component';
 import { ProductDetailComponent } from './product-detail.component';
-import { ProductDetailGuard } from './product-guard.service';
-import { AddProductComponent } from './add-product.component';
+import { ProductDetailGuard } from './product-detail-guard.service';
+import { ProductEditGuard } from './product-edit-guard.service';
+import { ProductComponent } from './product.component';
 
 import { ProductFilterPipe } from './product-filter.pipe';
 import { ProductService } from './product.service';
@@ -19,11 +20,12 @@ import { ProductService } from './product.service';
         ReactiveFormsModule,
         RouterModule.forChild([
             { path: 'products', component: ProductListComponent },
-            { path: 'product/add', component: AddProductComponent },
-            { path: 'product/:id', canActivate: [ProductDetailGuard], component: ProductDetailComponent }
+            { path: 'product/add', component: ProductComponent },
+            { path: 'product/:id', canActivate: [ProductDetailGuard], component: ProductDetailComponent },
+            { path: 'product/edit/:id', canActivate: [ProductEditGuard], component: ProductComponent }
         ])
     ],
-    declarations: [ProductListComponent, ProductDetailComponent, ProductFilterPipe, AddProductComponent],
-    providers: [ProductService, ProductDetailGuard]
+    declarations: [ProductListComponent, ProductDetailComponent, ProductFilterPipe, ProductComponent],
+    providers: [ProductService, ProductDetailGuard, ProductEditGuard]
 })
 export class ProductModule { }
