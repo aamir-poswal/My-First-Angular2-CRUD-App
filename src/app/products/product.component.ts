@@ -23,12 +23,14 @@ export class ProductComponent implements OnInit, OnDestroy {
         this.sub = this._route.params.subscribe(
             params => {
                 let id = +params['id'];
-                this.getProduct(id);
+                if (id) {
+                    this.getProduct(id);
+                }
             });
     }
 
     ngOnDestroy(): void {
-         this.sub.unsubscribe();
+        this.sub.unsubscribe();
     }
 
     getProduct(id: number) {
@@ -46,7 +48,7 @@ export class ProductComponent implements OnInit, OnDestroy {
         console.log('form is valid' + productForm);
     }
     onBack(): void {
-            this._router.navigate(['./products']);
+        this._router.navigate(['./products']);
     }
 
 }

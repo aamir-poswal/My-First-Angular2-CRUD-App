@@ -25,8 +25,18 @@ export class ProductListComponent implements OnInit {
         this._router.navigate(['product/add']);
     }
 
+    remove(id: number): void {
+        console.log('inside remove and id = ' + id);
+        // get index of object with id:37
+        let removeIndex = this.products.map(function (item) { return item.id; }).indexOf(id);
+        // remove object
+        this.products.splice(removeIndex, 1);
+    }
+
     ngOnInit(): void {
         this._productService.getProducts().subscribe(products => this.products = products
             , error => this.errorMessage = <any>error);
     }
+
+
 }
