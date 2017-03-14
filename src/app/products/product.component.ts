@@ -13,6 +13,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     submitted: boolean = false;
     sub: any;
     errorMessage: string;
+    productData: string;
 
     constructor(private _route: ActivatedRoute,
         private _router: Router,
@@ -42,10 +43,11 @@ export class ProductComponent implements OnInit, OnDestroy {
     save(productForm: any) {
         this.submitted = true;
         if (!productForm.valid) {
-            console.log('form is invalid' + productForm);
+            console.log('form is invalid' + JSON.stringify(this.product));
             return;
         }
-        console.log('form is valid' + productForm);
+        console.log('form is valid' + JSON.stringify(this.product));
+        this.productData = JSON.stringify(this.product);
     }
     onBack(): void {
         this._router.navigate(['./products']);
