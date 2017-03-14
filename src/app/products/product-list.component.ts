@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { IProduct } from './product';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { Product } from './product';
 import { ProductService } from './product.service';
 
 @Component({
@@ -13,16 +15,14 @@ export class ProductListComponent implements OnInit {
     errorMessage: string;
     clicked: boolean = false;
 
+    products: Product[];
 
-
-    products: IProduct[];
-
-    constructor(private _productService: ProductService) {
-
+    constructor(public _route: ActivatedRoute, public _router: Router, private _productService: ProductService) {
     }
 
     hello(): void {
         console.log('clicked');
+        this._router.navigate(['product/add']);
     }
 
     ngOnInit(): void {

@@ -1,0 +1,37 @@
+<div class="container-fluid">
+  <div class="content-container row">
+    <div class="form-group">
+      <h4>Add Product</h4>
+    </div>
+    <div class="col-md-6">
+      <form #f="ngForm" name="productForm" (ngSubmit)="save(f.form)" novalidate>
+        <div class="form-group">
+          <label class="control-label">Name</label>
+          <input type="text" name="productName" #productName="ngModel" class="form-control" [(ngModel)]="product.productName" required/>
+          <label *ngIf="productName.control.hasError('required') && (productName.touched || submitted)" class="alert alert-danger validation-message">Product Name is required</label>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Code</label>
+          <input type="text" name="productCode" #productCode="ngModel" class="form-control" [(ngModel)]="product.productCode" required/>
+          <label *ngIf="productCode.control.hasError('required') && (productCode.touched || submitted)" class="alert alert-danger validation-message">Product Code is required</label>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Release Date</label>
+          <input type="text" name="releaseDate" #releaseDate="ngModel" class="form-control" [(ngModel)]="product.releaseDate" required/>
+          <label *ngIf="releaseDate.control.hasError('required') && (releaseDate.touched || submitted)" class="alert alert-danger validation-message">Release Date is required</label>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Price</label>
+          <input type="text" name="price" #price="ngModel" class="form-control" [(ngModel)]="product.price" required/>
+          <label *ngIf="price.control.hasError('required') && (price.touched || submitted)" class="alert alert-danger validation-message">Price is required</label>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Description</label>
+          <textarea class="form-control" name="description"  #description="ngModel" [(ngModel)]="product.description" required></textarea>
+          <label *ngIf="description.control.hasError('required') && (description.touched || submitted)" class="alert alert-danger validation-message">Description is required</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

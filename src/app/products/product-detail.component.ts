@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs/Subscription';
 
-import { IProduct } from './product';
+import { Product } from './product';
 import { ProductService } from './product.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { ProductService } from './product.service';
 })
 export class ProductDetailComponent implements OnInit, OnDestroy {
     pageTitle: string = 'Product Detail';
-    product: IProduct;
+    product: Product;
     errorMessage: string;
     private sub: Subscription;
 

@@ -8,7 +8,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 
-import { IProduct } from './product';
+import { Product } from './product';
 
 @Injectable()
 export class ProductService {
@@ -19,15 +19,15 @@ export class ProductService {
 
     }
 
-    getProducts(): Observable<IProduct[]> {
-        return this._http.get(this._productUrl).map((response: Response) => <IProduct[]>response.json())
+    getProducts(): Observable<Product[]> {
+        return this._http.get(this._productUrl).map((response: Response) => <Product[]>response.json())
             .do(data => console.log('All: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
-    getProduct(id: number): Observable<IProduct> {
+    getProduct(id: number): Observable<Product> {
         return this.getProducts()
-            .map((products: IProduct[]) => products.find(p => p.id === id));
+            .map((products: Product[]) => products.find(p => p.id === id));
     }
 
     private handleError(error: Response) {
