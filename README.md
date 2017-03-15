@@ -47,21 +47,41 @@ We start with bootstraping our application by loading the app component, and the
 
 ![hosting-application](https://cloud.githubusercontent.com/assets/1701237/23939277/6563dcc6-0979-11e7-91fa-b05075677fcd.png)
 
+
 **Application startup flow:**
 
 **index.html->system.config.js->main.ts->->app.module.ts->app.component.ts**
 
 1. index.html
 
-![index html](https://cloud.githubusercontent.com/assets/1701237/23939512/70a6cbd8-097a-11e7-8ff6-7d3555e1a091.png)
+```
+<script>
+  System.import('main.js').catch(function(err){ console.error(err); });
+</script>
+<body>
+<my-app>Loading AppComponent content here ...</my-app>
+</body>
+```
 
 2. System.config.js
 
-![systemconfig](https://cloud.githubusercontent.com/assets/1701237/23939526/7fc290f2-097a-11e7-88c4-33ccdcb612c6.png)
+```
+map: {
+  // our app is within the app folder
+  app: 'app'
+  }
+```  
+
 
 3. main.ts
 
-![main](https://cloud.githubusercontent.com/assets/1701237/23939534/8c3b849c-097a-11e7-832b-592a29ba56e9.png)
+```
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { AppModule } from './app/app.module';
+
+platformBrowserDynamic().bootstrapModule(AppModule);
+```  
 
 4. app.module.ts
 
@@ -77,28 +97,56 @@ We are importing what is required to build this component. For example to use an
 
 Angular has different lifecycle hooks which we can use as per our problem context. For example in ProductListComponent we implemented OnInit interface which we used to get data from data source. ngOnInit is called directly after constructor and before ngOnChange. So usually this is best place for initialisation work.
 
-![life cycle hook](https://cloud.githubusercontent.com/assets/1701237/23950672/39b2e5c8-09a5-11e7-872e-ca8d952ff8c1.png)
+```
+import { Component, OnInit } from '@angular/core';
+
+export class ProductListComponent implements OnInit {
+ngOnInit(): void {
+        this._productService.getProducts().subscribe(products => this.products = products
+            , error => this.errorMessage = <any>error);
+    }
+}
+```  
 
 **LinkedTemplate and Component Inline Style:**
 
-We are using linkedTemplate in @Component decorator and inline style for the component for its specific style.
-
-
-![linkedtempalate](https://cloud.githubusercontent.com/assets/1701237/23950724/659bdf6e-09a5-11e7-8b7a-4bd10f9265b3.png)
-
+```
+@Component({
+    templateUrl: 'app/products/product-list.component.html',
+    styleUrls: ['app/products/product-list.component.css']
+})
+```  
 **Service:**
 
 Contains code/logic that independent from any component.
 Provide share data/logic to different components
-Used to communicate with external resources
-our custom service as an example product.service.ts 
+used to communicate with external resources
+
+**product.service.ts**
+
+our custom service as an example 
+
+Notice that we imported the Angular Injectable function and applied that function as an @Injectable() decorator.
+
+```javascript
+@Injectable()
+export class ProductService {}
+```
+Also to access the service you need to register in module provider.
+TypeScript sees the @Injectable() decorator and emits metadata about our service, metadata that Angular may need to inject other dependencies into this service.
+
+```javascript
+providers: [ProductService]
+```
 
 **Dependency Injection:**
 
 A coding pattern in which a class receives the instances of objects it needs (dependencies) from an external source(like framework) rather than creating them itself. Basically it outsource the object creational logic.
 In the constructor we are injecting the services we required from framework and our custom service(ProductService).
 
-`constructor(public _route: ActivatedRoute, public _router: Router, private _productService: ProductService) {    }`
+```javascript
+constructor(public _route: ActivatedRoute, public _router: Router, private _productService: ProductService) {    }
+```
 
 
 **Angular2 Data Binding:**
@@ -109,17 +157,29 @@ In the constructor we are injecting the services we required from framework and 
 
 The easiest way to display a component property is to bind the property name through interpolation. With interpolation, you put the property name in the view template, enclosed in double curly braces: {{myHero}}.
 
-![interpolation](https://cloud.githubusercontent.com/assets/1701237/23950844/ccf20648-09a5-11e7-800c-2b7c0945db53.png)
+```
+<div class='panel-heading'>
+  {{pageTitle}}
+</div>
+```
 
 - Binding to user input events
 
 You can use Angular event bindings to respond to any DOM event. Many DOM events are triggered by user input. Binding to these events provides a way to get input from the user.
 
-![twowaybinding](https://cloud.githubusercontent.com/assets/1701237/23950905/f81a8322-09a5-11e7-86a9-23231b337b1e.png)
+```
+<button class='btn btn-primary' (click)='hello()'>
+	New Product
+</button>
+```
 
 - Two-way data binding with ngModel	
 
-![two way data binding real](https://cloud.githubusercontent.com/assets/1701237/23950974/35eb71d4-09a6-11e7-976d-ca69476510a4.png)
+```
+<div class='col-md-4'>
+  <input type='text' [(ngModel)]='listFilter' />
+</div>
+```
 
 **Directive:**
 
@@ -130,8 +190,10 @@ Custom HTML element or attribute used to power up and extend our HTML.
 In the list component html we used angular2 structural directive as following.
 *ngIf and *ngFor
 
-`<table class='table' *ngIf='products && products.length'>`
-`<tr *ngFor='let product of products | productFilter:listFilter'>`
+```
+<table class='table' *ngIf='products && products.length'>
+<tr *ngFor='let product of products | productFilter:listFilter'>
+```
 
 **Angular2 Pipe:**
 
