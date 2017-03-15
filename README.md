@@ -224,12 +224,14 @@ export class ProductFilterPipe implements PipeTransform{
 ```
 
 product-filter.pipe.ts is our custom pipe.
-
-`<tr *ngFor='let product of products | productFilter:listFilter'>`
+```
+<tr *ngFor='let product of products | productFilter:listFilter'>
+```
 
 Following is the example of using built in pipe
-
-`<td>{{ product.price | currency:'USD':true:'1.2-2' }}</td>`
+```
+<td>{{ product.price | currency:'USD':true:'1.2-2' }}</td>
+```
 
 
 
