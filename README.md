@@ -201,6 +201,28 @@ In Angular2 we use pipes to transform the data. Pipes are of two types.
 - Custom
 - Built in
 
+**custom pipe**
+- A pipe is a class decorated with pipe metadata.
+- The pipe class implements the PipeTransform interface's transform method that accepts an input value followed by optional parameters and returns the transformed value.
+- To tell Angular that this is a pipe, you apply the @Pipe decorator, which you import from the core Angular library.
+- The @Pipe decorator allows you to define the pipe name that you'll use within template expressions. It must be a valid JavaScript identifier. Your pipe's name is productFilter.
+
+```
+import { PipeTransform, Pipe } from '@angular/core';
+import { Product } from './product';
+
+@Pipe({
+    name: 'productFilter'
+})
+export class ProductFilterPipe implements PipeTransform{
+    transform(value: Product[], filterBy: string): Product[] {
+        filterBy = filterBy ? filterBy.toLocaleLowerCase() : null;
+        return filterBy ? value.filter((product: Product) =>
+            product.productName.toLocaleLowerCase().indexOf(filterBy) !== -1) : value;
+    }
+}
+```
+
 product-filter.pipe.ts is our custom pipe.
 
 `<tr *ngFor='let product of products | productFilter:listFilter'>`
