@@ -155,7 +155,7 @@ constructor(public _route: ActivatedRoute, public _router: Router, private _prod
 
 - interpolation
 
-The easiest way to display a component property is to bind the property name through interpolation. With interpolation, you put the property name in the view template, enclosed in double curly braces: {{myHero}}.
+The easiest way to display a component property is to bind the property name through interpolation. With interpolation, you put the property name in the view template, enclosed in double curly braces: {{pageTitle}}.
 
 ```
 <div class='panel-heading'>
